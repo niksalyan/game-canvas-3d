@@ -1,6 +1,5 @@
 import {Load, Loader} from "../gc-engine/gc-loader";
 import {Scene} from "../gc-engine/gc-objects";
-import {Level1} from "./level1";
 import {THREE} from "../gc-engine/THREE";
 import {MainPlayer} from "./main-player";
 import {GuiText} from "../gc-engine/gc-gui";
@@ -8,20 +7,27 @@ import {Time} from "../gc-engine/gc-utils";
 import {Enemy} from "./enemy";
 import {Input} from "../gc-engine/gc-input";
 import {Engine} from "../gc-engine/gc-engine";
+import {LevelBlock} from "./level-block";
 
 @Load({
-    path: 'res',
+    path: 'res/models',
     resources: [
         'SpaceShip',
         'bullet',
-        'level',
+        'level-block-1',
+        'level-block-2',
         'asteroid',
         'explosion.png',
+    ]
+})
+@Load({
+    path: 'res/sounds',
+    resources: [
         'shoot.ogg'
 
     ]
 })
-export class MainScene extends Scene {
+export class Level extends Scene {
 
     constructor() {
         super();
@@ -34,7 +40,7 @@ export class MainScene extends Scene {
         this.camera.fov = 20;
         this.camera.updateProjectionMatrix();
 
-        this.add(new Level1());
+        this.add(new LevelBlock());
 
         var light = new THREE.PointLight(0xffffff, 0.5, 500);
         light.position.set(0, 0, 10);
@@ -66,8 +72,8 @@ export class MainScene extends Scene {
 
     Update() {
         this.attr.blockTimer += Time.deltaTime;
-        if (this.attr.blockTimer > 10.7) {
-            this.add(new Level1());
+        if (this.attr.blockTimer >= 10.7) {
+            this.add(new LevelBlock());
             this.attr.blockTimer = 0;
         }
 

@@ -632,37 +632,12 @@ define("gc-engine/gc-objects", ["require", "exports", "gc-engine/THREE", "gc-eng
     }
     exports.Scene = Scene;
 });
-define("src/level1", ["require", "exports", "gc-engine/gc-objects", "gc-engine/gc-loader", "gc-engine/gc-utils"], function (require, exports, gc_objects_1, gc_loader_2, gc_utils_3) {
+define("src/explosion", ["require", "exports", "gc-engine/gc-objects", "gc-engine/gc-loader", "gc-engine/gc-utils", "gc-engine/THREE"], function (require, exports, gc_objects_1, gc_loader_2, gc_utils_3, THREE_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class Level1 extends gc_objects_1.Object3D {
-        OnLoad() {
-            return gc_loader_2.Loader.models.level.clone();
-        }
-        Start() {
-            this.position.x = 120;
-            this.position.y = -18;
-            this.position.z = -38;
-            this.scale.x = 9;
-            this.scale.z = 9;
-            this.scale.y = 9;
-            this.rotationDeg.y = 0;
-        }
-        Update() {
-            this.position.x -= gc_utils_3.Time.deltaTime * 10;
-            if (this.position.x < -120) {
-                this.Destroy();
-            }
-        }
-    }
-    exports.Level1 = Level1;
-});
-define("src/explosion", ["require", "exports", "gc-engine/gc-objects", "gc-engine/gc-loader", "gc-engine/gc-utils", "gc-engine/THREE"], function (require, exports, gc_objects_2, gc_loader_3, gc_utils_4, THREE_5) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class Explosion extends gc_objects_2.AnimatedSprite {
+    class Explosion extends gc_objects_1.AnimatedSprite {
         constructor(position) {
-            super(gc_loader_3.Loader.textures.explosion, 5, 5);
+            super(gc_loader_2.Loader.textures.explosion, 5, 5);
             this.position.set(position.x + THREE_5.THREE.Math.randFloatSpread(2), position.y + THREE_5.THREE.Math.randFloatSpread(2), position.z + THREE_5.THREE.Math.randFloatSpread(2));
         }
         Start() {
@@ -675,13 +650,13 @@ define("src/explosion", ["require", "exports", "gc-engine/gc-objects", "gc-engin
             this.frame = THREE_5.THREE.Math.randFloat(0, 25);
         }
         Update() {
-            this.frame += gc_utils_4.Time.deltaTime * 20;
-            this.position.x += gc_utils_4.Time.deltaTime * this.attr.moveX;
-            this.position.y += gc_utils_4.Time.deltaTime * this.attr.moveY;
-            this.position.z += gc_utils_4.Time.deltaTime * this.attr.moveZ;
-            this.scale.x = THREE_5.THREE.Math.clamp(this.scale.x - gc_utils_4.Time.deltaTime, 0, 10);
-            this.scale.y = THREE_5.THREE.Math.clamp(this.scale.y - gc_utils_4.Time.deltaTime, 0, 10);
-            this.scale.z = THREE_5.THREE.Math.clamp(this.scale.z - gc_utils_4.Time.deltaTime, 0, 10);
+            this.frame += gc_utils_3.Time.deltaTime * 20;
+            this.position.x += gc_utils_3.Time.deltaTime * this.attr.moveX;
+            this.position.y += gc_utils_3.Time.deltaTime * this.attr.moveY;
+            this.position.z += gc_utils_3.Time.deltaTime * this.attr.moveZ;
+            this.scale.x = THREE_5.THREE.Math.clamp(this.scale.x - gc_utils_3.Time.deltaTime, 0, 10);
+            this.scale.y = THREE_5.THREE.Math.clamp(this.scale.y - gc_utils_3.Time.deltaTime, 0, 10);
+            this.scale.z = THREE_5.THREE.Math.clamp(this.scale.z - gc_utils_3.Time.deltaTime, 0, 10);
             this.material.opacity = THREE_5.THREE.Math.clamp(1 - (this.frame / 25), 0, 1);
             if (this.frame >= 25) {
                 this.Destroy();
@@ -690,27 +665,27 @@ define("src/explosion", ["require", "exports", "gc-engine/gc-objects", "gc-engin
     }
     exports.Explosion = Explosion;
 });
-define("src/bullet", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-utils", "src/explosion", "gc-engine/gc-objects", "gc-engine/gc-engine"], function (require, exports, gc_loader_4, gc_utils_5, explosion_1, gc_objects_3, gc_engine_3) {
+define("src/bullet", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-utils", "src/explosion", "gc-engine/gc-objects", "gc-engine/gc-engine"], function (require, exports, gc_loader_3, gc_utils_4, explosion_1, gc_objects_2, gc_engine_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class Bullet extends gc_objects_3.Object3D {
+    class Bullet extends gc_objects_2.Object3D {
         constructor() {
             super(...arguments);
             this.tag = 'bullet';
         }
         Init() {
-            return gc_loader_4.Loader.models.bullet.clone();
+            return gc_loader_3.Loader.models.bullet.clone();
         }
         Start() {
             this.scale.x = 10;
             this.scale.y = 10;
             this.scale.z = 10;
-            this.audio.setBuffer(gc_loader_4.Loader.sounds.shoot);
+            this.audio.setBuffer(gc_loader_3.Loader.sounds.shoot);
             this.audio.setVolume(10);
             this.audio.play();
         }
         Update() {
-            this.position.x += gc_utils_5.Time.deltaTime * 100;
+            this.position.x += gc_utils_4.Time.deltaTime * 100;
             if (this.position.x > 32) {
                 this.Destroy();
             }
@@ -727,20 +702,20 @@ define("src/bullet", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc
     }
     exports.Bullet = Bullet;
 });
-define("src/main-player", ["require", "exports", "gc-engine/gc-objects", "gc-engine/gc-utils", "gc-engine/gc-loader", "gc-engine/gc-input", "src/bullet", "gc-engine/THREE", "gc-engine/gc-engine"], function (require, exports, gc_objects_4, gc_utils_6, gc_loader_5, gc_input_2, bullet_1, THREE_6, gc_engine_4) {
+define("src/main-player", ["require", "exports", "gc-engine/gc-objects", "gc-engine/gc-utils", "gc-engine/gc-loader", "gc-engine/gc-input", "src/bullet", "gc-engine/THREE", "gc-engine/gc-engine"], function (require, exports, gc_objects_3, gc_utils_5, gc_loader_4, gc_input_2, bullet_1, THREE_6, gc_engine_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class MainPlayer extends gc_objects_4.Object3D {
+    class MainPlayer extends gc_objects_3.Object3D {
         OnLoad() {
-            return gc_loader_5.Loader.models.SpaceShip;
+            return gc_loader_4.Loader.models.SpaceShip;
         }
         Start() {
-            this.attr.moveX = new gc_utils_6.SmoothDamp();
-            this.attr.moveY = new gc_utils_6.SmoothDamp();
+            this.attr.moveX = new gc_utils_5.SmoothDamp();
+            this.attr.moveY = new gc_utils_5.SmoothDamp();
             this.attr.shootTimer = 0;
         }
         Update() {
-            this.attr.shootTimer += gc_utils_6.Time.deltaTime;
+            this.attr.shootTimer += gc_utils_5.Time.deltaTime;
             if (gc_input_2.Input.actionA && this.attr.shootTimer > 0.15) {
                 let b = new bullet_1.Bullet();
                 b.position.set(this.position.x, this.position.y - 0.9, this.position.z);
@@ -753,8 +728,8 @@ define("src/main-player", ["require", "exports", "gc-engine/gc-objects", "gc-eng
             this.attr.moveY.Update();
             this.rotationDeg.x = 0 - this.attr.moveY.value * 15 * (1 + Math.abs(this.attr.moveX.value));
             this.rotationDeg.y = 90;
-            this.position.x = THREE_6.THREE.Math.clamp(this.position.x + this.attr.moveX.value * gc_utils_6.Time.deltaTime * 20, -28, 28);
-            this.position.y = THREE_6.THREE.Math.clamp(this.position.y + this.attr.moveY.value * gc_utils_6.Time.deltaTime * 20, -15, 15);
+            this.position.x = THREE_6.THREE.Math.clamp(this.position.x + this.attr.moveX.value * gc_utils_5.Time.deltaTime * 20, -28, 28);
+            this.position.y = THREE_6.THREE.Math.clamp(this.position.y + this.attr.moveY.value * gc_utils_5.Time.deltaTime * 20, -15, 15);
         }
     }
     exports.MainPlayer = MainPlayer;
@@ -816,12 +791,12 @@ define("gc-engine/gc-gui", ["require", "exports", "gc-engine/THREE"], function (
     }
     exports.GuiText = GuiText;
 });
-define("src/enemy", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-utils", "gc-engine/gc-objects", "gc-engine/THREE", "src/explosion", "gc-engine/gc-engine"], function (require, exports, gc_loader_6, gc_utils_7, gc_objects_5, THREE_8, explosion_2, gc_engine_5) {
+define("src/enemy", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-utils", "gc-engine/gc-objects", "gc-engine/THREE", "src/explosion", "gc-engine/gc-engine"], function (require, exports, gc_loader_5, gc_utils_6, gc_objects_4, THREE_8, explosion_2, gc_engine_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class Enemy extends gc_objects_5.Object3D {
+    class Enemy extends gc_objects_4.Object3D {
         constructor() {
-            super(gc_loader_6.Loader.models.asteroid.clone());
+            super(gc_loader_5.Loader.models.asteroid.clone());
             this.tag = 'enemy';
         }
         Init() {
@@ -838,10 +813,10 @@ define("src/enemy", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-
         }
         Update() {
             this.material.emissiveIntensity = 0;
-            this.position.x -= gc_utils_7.Time.deltaTime * 10;
-            this.rotationDeg.x += gc_utils_7.Time.deltaTime * 30;
-            this.rotationDeg.y += gc_utils_7.Time.deltaTime * 90;
-            this.rotationDeg.z += gc_utils_7.Time.deltaTime * 20;
+            this.position.x -= gc_utils_6.Time.deltaTime * 10;
+            this.rotationDeg.x += gc_utils_6.Time.deltaTime * 30;
+            this.rotationDeg.y += gc_utils_6.Time.deltaTime * 90;
+            this.rotationDeg.z += gc_utils_6.Time.deltaTime * 20;
             if (this.position.x < -33) {
                 this.Destroy();
             }
@@ -860,10 +835,35 @@ define("src/enemy", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-
     }
     exports.Enemy = Enemy;
 });
-define("src/main-scene", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-objects", "src/level1", "gc-engine/THREE", "src/main-player", "gc-engine/gc-gui", "gc-engine/gc-utils", "src/enemy", "gc-engine/gc-input", "gc-engine/gc-engine"], function (require, exports, gc_loader_7, gc_objects_6, level1_1, THREE_9, main_player_1, gc_gui_1, gc_utils_8, enemy_1, gc_input_3, gc_engine_6) {
+define("src/level-block", ["require", "exports", "gc-engine/gc-objects", "gc-engine/gc-loader", "gc-engine/gc-utils", "gc-engine/THREE"], function (require, exports, gc_objects_5, gc_loader_6, gc_utils_7, THREE_9) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    let MainScene = class MainScene extends gc_objects_6.Scene {
+    class LevelBlock extends gc_objects_5.Object3D {
+        OnLoad() {
+            return gc_loader_6.Loader.models['level-block-' + THREE_9.THREE.Math.randInt(1, 2)].clone();
+        }
+        Start() {
+            this.position.x = 120;
+            this.position.y = -18;
+            this.position.z = -38;
+            this.scale.x = 9;
+            this.scale.z = 9;
+            this.scale.y = 9;
+            this.rotationDeg.y = 0;
+        }
+        Update() {
+            this.position.x -= gc_utils_7.Time.deltaTime * 10;
+            if (this.position.x < -120) {
+                this.Destroy();
+            }
+        }
+    }
+    exports.LevelBlock = LevelBlock;
+});
+define("src/level", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-objects", "gc-engine/THREE", "src/main-player", "gc-engine/gc-gui", "gc-engine/gc-utils", "src/enemy", "gc-engine/gc-input", "gc-engine/gc-engine", "src/level-block"], function (require, exports, gc_loader_7, gc_objects_6, THREE_10, main_player_1, gc_gui_1, gc_utils_8, enemy_1, gc_input_3, gc_engine_6, level_block_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Level = class Level extends gc_objects_6.Scene {
         constructor() {
             super();
             this.camera.position.z = 100;
@@ -871,8 +871,8 @@ define("src/main-scene", ["require", "exports", "gc-engine/gc-loader", "gc-engin
             this.camera.far = 500;
             this.camera.fov = 20;
             this.camera.updateProjectionMatrix();
-            this.add(new level1_1.Level1());
-            var light = new THREE_9.THREE.PointLight(0xffffff, 0.5, 500);
+            this.add(new level_block_1.LevelBlock());
+            var light = new THREE_10.THREE.PointLight(0xffffff, 0.5, 500);
             light.position.set(0, 0, 10);
             this.add(light);
             this.add(new main_player_1.MainPlayer());
@@ -892,8 +892,8 @@ define("src/main-scene", ["require", "exports", "gc-engine/gc-loader", "gc-engin
         }
         Update() {
             this.attr.blockTimer += gc_utils_8.Time.deltaTime;
-            if (this.attr.blockTimer > 10.7) {
-                this.add(new level1_1.Level1());
+            if (this.attr.blockTimer >= 10.7) {
+                this.add(new level_block_1.LevelBlock());
                 this.attr.blockTimer = 0;
             }
             this.attr.enemyTimer += gc_utils_8.Time.deltaTime;
@@ -918,28 +918,34 @@ define("src/main-scene", ["require", "exports", "gc-engine/gc-loader", "gc-engin
             }
         }
     };
-    MainScene = __decorate([
+    Level = __decorate([
         gc_loader_7.Load({
-            path: 'res',
+            path: 'res/models',
             resources: [
                 'SpaceShip',
                 'bullet',
-                'level',
+                'level-block-1',
+                'level-block-2',
                 'asteroid',
                 'explosion.png',
+            ]
+        }),
+        gc_loader_7.Load({
+            path: 'res/sounds',
+            resources: [
                 'shoot.ogg'
             ]
         })
-    ], MainScene);
-    exports.MainScene = MainScene;
+    ], Level);
+    exports.Level = Level;
 });
-define("app", ["require", "exports", "gc-engine/gc-engine", "src/main-scene"], function (require, exports, gc_engine_7, main_scene_1) {
+define("app", ["require", "exports", "gc-engine/gc-engine", "src/level"], function (require, exports, gc_engine_7, level_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class App {
         constructor() {
             gc_engine_7.Engine.Init(1280, 720, true);
-            gc_engine_7.Engine.SetScene(new main_scene_1.MainScene());
+            gc_engine_7.Engine.SetScene(new level_1.Level());
         }
     }
     new App();

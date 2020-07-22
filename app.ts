@@ -1,10 +1,10 @@
 import {Engine} from "./gc-engine/gc-engine";
-import {MainScene} from "./src/main-scene";
+import {Level} from "./src/level";
 
 class App {
     constructor() {
         Engine.Init(1280, 720, true);
-        Engine.SetScene(new MainScene());
+        Engine.SetScene(new Level());
     }
 }
 

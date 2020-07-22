@@ -1,10 +1,11 @@
 import {Object3D} from "../gc-engine/gc-objects";
 import {Loader} from "../gc-engine/gc-loader";
 import {Time} from "../gc-engine/gc-utils";
+import {THREE} from "../gc-engine/THREE";
 
-export class Level1 extends Object3D {
+export class LevelBlock extends Object3D {
     OnLoad() {
-        return Loader.models.level.clone();
+        return Loader.models['level-block-' + THREE.Math.randInt(1, 2)].clone();
     }
 
     Start() {
