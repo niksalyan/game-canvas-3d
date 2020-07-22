@@ -120,5 +120,4 @@ export class Input {
             delete Input.click[prop];
         }
     }
-
 }

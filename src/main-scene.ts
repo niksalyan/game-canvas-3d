@@ -77,12 +77,12 @@ export class MainScene extends Scene {
             this.attr.enemyTimer = 0;
         }
 
-        if (Input.click.p) {
+        if (Input.click.KeyP) {
             this.attr.paused = !this.attr.paused;
             Time.timeScale = this.attr.paused ? 0 : 1;
         }
 
-        if (Input.click.m) {
+        if (Input.click.KeyM) {
             this.attr.matrix = !this.attr.matrix;
             Time.timeScale = this.attr.matrix ? 0.2 : 1;
         }

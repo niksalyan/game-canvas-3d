@@ -54,7 +54,7 @@ export class Enemy extends Object3D {
             Engine.scene.attr.score += 100;
 
             this.Destroy();
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 100; i++) {
                 Engine.scene.add(new Explosion(this.position));
             }
         }

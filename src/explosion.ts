@@ -13,29 +13,29 @@ export class Explosion extends AnimatedSprite {
             );
     }
 
-    Init () {
-
+    Start () {
         let size = THREE.Math.randFloat(0, 4);
 
         this.scale.set(size,size,size);
-        
-        this.attr.moveX = THREE.Math.randFloatSpread(20);
-        this.attr.moveY = THREE.Math.randFloatSpread(20);
-        this.attr.moveZ = THREE.Math.randFloatSpread(20);
+
+        this.attr.moveX = THREE.Math.randFloatSpread(30);
+        this.attr.moveY = THREE.Math.randFloatSpread(30);
+        this.attr.moveZ = THREE.Math.randFloatSpread(30);
 
         this.material.rotation = Math.random() * Math.PI * 2;
 
-        this.frame = THREE.Math.randFloat(0, 10);
-
-        
-
+        this.frame = THREE.Math.randFloat(0, 25);
     }
 
     Update () {
-        this.frame += Time.deltaTime * 40;
+        this.frame += Time.deltaTime * 20;
         this.position.x += Time.deltaTime * this.attr.moveX;
         this.position.y += Time.deltaTime * this.attr.moveY;
         this.position.z += Time.deltaTime * this.attr.moveZ;
+
+        this.scale.x = THREE.Math.clamp(this.scale.x - Time.deltaTime, 0, 10);
+        this.scale.y = THREE.Math.clamp(this.scale.y - Time.deltaTime, 0, 10);
+        this.scale.z = THREE.Math.clamp(this.scale.z - Time.deltaTime, 0, 10);
 
         this.material.opacity = THREE.Math.clamp(1 - (this.frame / 25), 0, 1);
 

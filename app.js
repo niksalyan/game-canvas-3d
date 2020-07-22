@@ -665,20 +665,23 @@ define("src/explosion", ["require", "exports", "gc-engine/gc-objects", "gc-engin
             super(gc_loader_3.Loader.textures.explosion, 5, 5);
             this.position.set(position.x + THREE_5.THREE.Math.randFloatSpread(2), position.y + THREE_5.THREE.Math.randFloatSpread(2), position.z + THREE_5.THREE.Math.randFloatSpread(2));
         }
-        Init() {
+        Start() {
             let size = THREE_5.THREE.Math.randFloat(0, 4);
             this.scale.set(size, size, size);
-            this.attr.moveX = THREE_5.THREE.Math.randFloatSpread(20);
-            this.attr.moveY = THREE_5.THREE.Math.randFloatSpread(20);
-            this.attr.moveZ = THREE_5.THREE.Math.randFloatSpread(20);
+            this.attr.moveX = THREE_5.THREE.Math.randFloatSpread(30);
+            this.attr.moveY = THREE_5.THREE.Math.randFloatSpread(30);
+            this.attr.moveZ = THREE_5.THREE.Math.randFloatSpread(30);
             this.material.rotation = Math.random() * Math.PI * 2;
-            this.frame = THREE_5.THREE.Math.randFloat(0, 10);
+            this.frame = THREE_5.THREE.Math.randFloat(0, 25);
         }
         Update() {
-            this.frame += gc_utils_4.Time.deltaTime * 40;
+            this.frame += gc_utils_4.Time.deltaTime * 20;
             this.position.x += gc_utils_4.Time.deltaTime * this.attr.moveX;
             this.position.y += gc_utils_4.Time.deltaTime * this.attr.moveY;
             this.position.z += gc_utils_4.Time.deltaTime * this.attr.moveZ;
+            this.scale.x = THREE_5.THREE.Math.clamp(this.scale.x - gc_utils_4.Time.deltaTime, 0, 10);
+            this.scale.y = THREE_5.THREE.Math.clamp(this.scale.y - gc_utils_4.Time.deltaTime, 0, 10);
+            this.scale.z = THREE_5.THREE.Math.clamp(this.scale.z - gc_utils_4.Time.deltaTime, 0, 10);
             this.material.opacity = THREE_5.THREE.Math.clamp(1 - (this.frame / 25), 0, 1);
             if (this.frame >= 25) {
                 this.Destroy();
@@ -849,7 +852,7 @@ define("src/enemy", ["require", "exports", "gc-engine/gc-loader", "gc-engine/gc-
             if (this.attr.health <= 0) {
                 gc_engine_5.Engine.scene.attr.score += 100;
                 this.Destroy();
-                for (let i = 0; i < 50; i++) {
+                for (let i = 0; i < 100; i++) {
                     gc_engine_5.Engine.scene.add(new explosion_2.Explosion(this.position));
                 }
             }
@@ -898,11 +901,11 @@ define("src/main-scene", ["require", "exports", "gc-engine/gc-loader", "gc-engin
                 this.add(new enemy_1.Enemy());
                 this.attr.enemyTimer = 0;
             }
-            if (gc_input_3.Input.click.p) {
+            if (gc_input_3.Input.click.KeyP) {
                 this.attr.paused = !this.attr.paused;
                 gc_utils_8.Time.timeScale = this.attr.paused ? 0 : 1;
             }
-            if (gc_input_3.Input.click.m) {
+            if (gc_input_3.Input.click.KeyM) {
                 this.attr.matrix = !this.attr.matrix;
                 gc_utils_8.Time.timeScale = this.attr.matrix ? 0.2 : 1;
             }
