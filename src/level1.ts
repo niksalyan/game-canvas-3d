@@ -1,4 +1,8 @@
-class Level1 extends Object3D {
+import {Object3D} from "../gc-engine/gc-objects";
+import {Loader} from "../gc-engine/gc-loader";
+import {Time} from "../gc-engine/gc-utils";
+
+export class Level1 extends Object3D {
     OnLoad() {
         return Loader.models.level.clone();
     }

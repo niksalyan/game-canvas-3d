@@ -1,4 +1,13 @@
-declare const Scene, MainPlayer, Engine, THREE, Level1;
+import {Load, Loader} from "../gc-engine/gc-loader";
+import {Scene} from "../gc-engine/gc-objects";
+import {Level1} from "./level1";
+import {THREE} from "../gc-engine/THREE";
+import {MainPlayer} from "./main-player";
+import {GuiText} from "../gc-engine/gc-gui";
+import {Time} from "../gc-engine/gc-utils";
+import {Enemy} from "./enemy";
+import {Input} from "../gc-engine/gc-input";
+import {Engine} from "../gc-engine/gc-engine";
 
 @Load({
     path: 'res',
@@ -9,10 +18,10 @@ declare const Scene, MainPlayer, Engine, THREE, Level1;
         'asteroid',
         'explosion.png',
         'shoot.ogg'
-        
+
     ]
 })
-class MainScene extends Scene {
+export class MainScene extends Scene {
 
     constructor() {
         super();
@@ -52,7 +61,7 @@ class MainScene extends Scene {
     }
 
     Start() {
-        Engine.audio.setBuffer(Loader.sounds.music);    
+        Engine.audio.setBuffer(Loader.sounds.music);
     }
 
     Update() {

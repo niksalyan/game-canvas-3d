@@ -1,6 +1,6 @@
-declare const THREE;
+import {THREE, Vector3} from "./THREE";
 
-class Time {
+export class Time {
     public static clock = new THREE.Clock();
     public static deltaTime: number = 0.01;
     public static timeScale: number = 1;
@@ -21,7 +21,7 @@ class Time {
     }
 }
 
-class SmoothDamp {
+export class SmoothDamp {
 
     private currentVelocity = 0;
     public maxSpeed = 1;
@@ -35,7 +35,7 @@ class SmoothDamp {
     }
 }
 
-class DegRadMap {
+export class DegRadMap {
 
     private deg2rad: number = THREE.Math.DEG2RAD;
     private rad2deg: number = THREE.Math.RAD2DEG;
@@ -92,10 +92,10 @@ class DegRadMap {
 
 }
 
-class Collision {
+export class Collision {
 
     public radius: number = 0.5;
-    public size: THREE.Vector3 = new THREE.Vector3(1, 1, 1);
+    public size: Vector3 = new THREE.Vector3(1, 1, 1);
 
     constructor(private obj) {
 
@@ -112,7 +112,7 @@ class Collision {
     }
 }
 
-class Utils {
+export class Utils {
     public static applyTexture(obj, texture) {
         let material = new THREE.MeshBasicMaterial({ map: texture });
         obj.traverse((node) => {

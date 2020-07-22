@@ -1,10 +1,11 @@
-declare const THREE;
+import {THREE} from "./THREE";
 
-class GuiObject extends THREE.Object3D {
+export class GuiObject extends THREE.Object3D {
 
     public alpha: number = 1;
 
     constructor() {
+        // @ts-ignore No signature yet
         super();
         this.userData.gui = {};
         this.Init();
@@ -45,7 +46,7 @@ class GuiObject extends THREE.Object3D {
     }
 }
 
-class GuiText extends GuiObject{
+export class GuiText extends GuiObject{
 
     public text = '';
     public lineHeight: number = 30;

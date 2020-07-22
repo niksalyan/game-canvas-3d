@@ -1,3 +1,4 @@
+import {Engine} from "./gc-engine";
 
 export class Input {
     public static key: any = {};
@@ -87,7 +88,7 @@ export class Input {
                 Input.inkey = evt.key.length === 1 ? Input.inkey + evt.key : (evt.keyCode === 8 ? Input.inkey.slice(0, -1) : Input.inkey);
                 break;
             case 'keyup':
-                delete Input.key[evt.code]];
+                delete Input.key[evt.code];
                 Input.click[evt.code] = true;
                 break;
         }

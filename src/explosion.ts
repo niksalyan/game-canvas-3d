@@ -1,10 +1,13 @@
-declare const Object3D;
+import {AnimatedSprite} from "../gc-engine/gc-objects";
+import {Loader} from "../gc-engine/gc-loader";
+import {Time} from "../gc-engine/gc-utils";
+import {THREE} from "../gc-engine/THREE";
 
-class Explosion extends AnimatedSprite {
+export class Explosion extends AnimatedSprite {
     constructor(position){
         super(Loader.textures.explosion, 5, 5);
         this.position.set(
-            position.x + THREE.Math.randFloatSpread(2), 
+            position.x + THREE.Math.randFloatSpread(2),
             position.y + THREE.Math.randFloatSpread(2), 
             position.z + THREE.Math.randFloatSpread(2)
             );

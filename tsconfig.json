@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outFile": "app.js",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true
+  },
+  "files": [
+    "app.ts"
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

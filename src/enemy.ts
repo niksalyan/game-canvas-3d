@@ -1,6 +1,11 @@
-declare const Object3D, Loader, Time, THREE;
+import {Loader} from "../gc-engine/gc-loader";
+import {Time} from "../gc-engine/gc-utils";
+import {Object3D} from "../gc-engine/gc-objects";
+import {THREE} from "../gc-engine/THREE";
+import {Explosion} from "./explosion";
+import {Engine} from "../gc-engine/gc-engine";
 
-class Enemy extends Object3D {
+export class Enemy extends Object3D {
 
     public tag = 'enemy';
 
@@ -46,7 +51,7 @@ class Enemy extends Object3D {
         this.attr.health -= damage;
         if (this.attr.health <= 0) {
 
-            Engine.scene.attr.score += 100; 
+            Engine.scene.attr.score += 100;
 
             this.Destroy();
             for (let i = 0; i < 50; i++) {

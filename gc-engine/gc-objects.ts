@@ -1,6 +1,8 @@
-declare const THREE, Engine, DegRadMap, Collision;
+import {THREE} from "./THREE";
+import {Collision, DegRadMap} from "./gc-utils";
+import {Engine} from "./gc-engine";
 
-class Object3D extends THREE.Object3D {
+export class Object3D extends THREE.Object3D {
 
     public tag: string;
 
@@ -9,6 +11,7 @@ class Object3D extends THREE.Object3D {
     private _audio;
 
     constructor(obj = null) {
+        // @ts-ignore No signature yet
         super();
         this.SetObject(obj);
         this.SetObject(this.Init());
@@ -28,6 +31,7 @@ class Object3D extends THREE.Object3D {
                 switch (key) {
                     case 'position':
                     case 'rotation':
+                    case 'quaternion':
                     case 'scale':
                     case 'tag':
                     case 'name':
@@ -93,7 +97,7 @@ class Object3D extends THREE.Object3D {
 
 }
 
-class AnimatedSprite extends Object3D {
+export class AnimatedSprite extends Object3D {
 
     public frame: number = 0;
     
@@ -120,7 +124,7 @@ class AnimatedSprite extends Object3D {
 
 }
 
-class Scene extends Object3D {
+export class Scene extends Object3D {
     constructor() {
         super(new THREE.Scene());
         this.camera = new THREE.PerspectiveCamera(

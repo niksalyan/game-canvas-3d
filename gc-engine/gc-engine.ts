@@ -1,16 +1,19 @@
-declare const THREE, Loader, Input, Time;
+import {THREE} from "./THREE";
+import {Input} from "./gc-input";
+import {Time} from "./gc-utils";
+import {Loader} from "./gc-loader";
 
-class Engine {
+export class Engine {
 
     public static width: number = 0;
     public static height: number = 0;
     public static aspect: number = 0;
 
-    private static renderer;
+    private static renderer: any;
     private static rendering = false;
 
-    public static guiContainer;
-    public static gui;
+    public static guiContainer: any;
+    public static gui: any;
 
     public static scene;
     public static listener;

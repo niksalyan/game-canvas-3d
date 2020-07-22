@@ -1,4 +1,12 @@
-class MainPlayer extends Object3D {
+import {Object3D} from "../gc-engine/gc-objects";
+import {SmoothDamp, Time} from "../gc-engine/gc-utils";
+import {Loader} from "../gc-engine/gc-loader";
+import {Input} from "../gc-engine/gc-input";
+import {Bullet} from "./bullet";
+import {THREE} from "../gc-engine/THREE";
+import {Engine} from "../gc-engine/gc-engine";
+
+export class MainPlayer extends Object3D {
     OnLoad() {
         return Loader.models.SpaceShip;
     }
@@ -13,7 +21,7 @@ class MainPlayer extends Object3D {
         this.attr.shootTimer += Time.deltaTime;
 
         if (Input.actionA && this.attr.shootTimer > 0.15) {
-            let b = new Bullet();
+            let b: Bullet = new Bullet();
             b.position.set(this.position.x, this.position.y - 0.9, this.position.z);
 
             Engine.scene.add(b);

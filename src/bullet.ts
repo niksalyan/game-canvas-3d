@@ -1,6 +1,10 @@
-declare const Object3D, Loader, Time, Engine;
+import {Loader} from "../gc-engine/gc-loader";
+import {Time} from "../gc-engine/gc-utils";
+import {Explosion} from "./explosion";
+import {Object3D} from "../gc-engine/gc-objects";
+import {Engine} from "../gc-engine/gc-engine";
 
-class Bullet extends Object3D {
+export class Bullet extends Object3D {
 
     public tag = 'bullet';
 

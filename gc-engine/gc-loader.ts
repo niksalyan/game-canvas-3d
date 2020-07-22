@@ -1,10 +1,12 @@
-declare const THREE, Data;
+import {THREE} from "./THREE";
 
-function Load(config: any) {
+function LoadDecorator(config: any) {
     Loader.Load(config.path, config.resources);
 }
 
-class Loader {
+export const Load: any = LoadDecorator;
+
+export class Loader {
 
     public static maxProgress: number = 0;
 
@@ -59,10 +61,12 @@ class Loader {
         if (Loader.models[name]) {
             return;
         }
+        /* Not yet implemented
         if (typeof Data !== 'undefined' && Data && Data[name]) {
             Loader.models[name] = Loader.objectLoader.parse(Data[name]);
             return;
         }
+        */
         Loader.loading++;
         Loader.objectLoader.load(file, (model) => {
             Loader.models[name] = model;

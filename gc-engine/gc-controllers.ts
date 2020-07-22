@@ -1,6 +1,6 @@
-declare const Time, Easing;
+import {Time} from "./gc-utils";
 
-class Tween {
+export class Tween {
     private fase: number = 0;
     private speed: number;
     public value: number = 0;
@@ -25,7 +25,7 @@ class Tween {
     }
 }
 
-class Smooth {
+export class Smooth {
 
     public value: number;
 
